@@ -1,0 +1,2 @@
+class InvalidMove < StandardError 
+end 
