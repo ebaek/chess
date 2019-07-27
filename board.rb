@@ -9,9 +9,7 @@ require_relative "null_piece"
 
 require "byebug"
 
-
 class Board 
-
   attr_reader :grid
 
   def initialize 
@@ -21,8 +19,10 @@ class Board
   end 
 
   def move_piece(start_pos, end_pos)
+    debugger
     if self[start_pos] && self[end_pos].is_a?(NullPiece)
-      self[end_pos] = self[start_pos]
+      start_pos_piece = self[start_pos]
+      self[end_pos] = start_pos_piece
       self[start_pos] = sentinel
     end
   end
@@ -56,9 +56,11 @@ class Board
       if row.between?(2, 5)
         grid[row].fill(sentinel)
       end 
-      8.times do |col| 
-        pos = [row, col]
-        self[pos] = Piece.new(:red, self, pos )
+      8.times do |col|
+        if !row.between?(2,5) 
+          pos = [row, col]
+          self[pos] = Piece.new(:red, self, pos)
+        end
       end
     end
     place_pawns 

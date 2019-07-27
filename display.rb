@@ -37,9 +37,8 @@ class Display
     end
     full_board += str.join + "\n"
     end
-    # print full_board + "\r"
-    
-    $stdout.print "#{full_board}\r"
+
+    print "#{full_board}"
   end
 
 end

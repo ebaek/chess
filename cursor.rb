@@ -39,6 +39,9 @@ class Cursor
   def initialize(cursor_pos, board)
     @cursor_pos = cursor_pos
     @board = board
+
+    @row = cursor_pos[0]
+    @col = cursor_pos[1]
   end
 
   def get_input
@@ -82,7 +85,7 @@ class Cursor
       Process.exit(0)
       nil
     elsif[:return, :space].include?(key) 
-      cursor_pos 
+      [@row, @col]
     elsif [:left, :right, :up, :down].include?(key) 
       update_pos(MOVES[key])  
       nil
@@ -92,7 +95,7 @@ class Cursor
 
   def valid_pos?(pos) 
     row, col = pos 
-    cur_cursor_pos = cursor_pos 
+    cur_cursor_pos = cursor_pos
     cur_cursor_pos[0] += row 
     cur_cursor_pos[1] += col
     cur_cursor_pos.all?{ |el| el.between?(0,7)}    
@@ -101,8 +104,8 @@ class Cursor
   def update_pos(diff)
     row, col = diff
     if valid_pos?(diff)
-      cursor_pos[0] += row 
-      cursor_pos[1] += col
+      @row += row
+      @col += col
     end
   end
 

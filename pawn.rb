@@ -14,19 +14,19 @@ class Pawn < Piece
     "\u265F".encode('utf-8');
   end
 
-  def forward_steps
+  def move_dirs
     std = []
     if color == :magenta
-      std += pawn_moves(MAGENTA_MOVES) 
+      std << pawn_moves(MAGENTA_MOVES) 
       if start_row
-        std += pawn_moves([[-2,0]]) 
+        std << pawn_moves([[-2,0]]) 
         self.start_row = false
       end
     end
     if color == :blue 
       std.concat pawn_moves(BLUE_MOVES)
       if start_row
-        std += pawn_moves([[2,0]]) 
+        std << pawn_moves([[2,0]]) 
         self.start_row = false
       end
     end
@@ -58,8 +58,6 @@ class Pawn < Piece
   #   if color = :blue
 
   #   end
-
-
   # end
 
   def on_board?(p)
