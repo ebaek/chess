@@ -37,11 +37,12 @@ class Cursor
   attr_reader :cursor_pos, :board
 
   def initialize(board)
-    @cursor_pos = []
+    
     @board = board
 
-    @row = cursor_pos[0]
-    @col = cursor_pos[1]
+    # @row = 0
+    # @col = 0
+    @cursor_pos = [0, 0]
   end
 
   def get_input
@@ -85,14 +86,14 @@ class Cursor
       Process.exit(0)
       nil
     elsif[:return, :space].include?(key)
-      new_pos = [@row, @col]
+      new_pos = [cursor_pos[0], cursor_pos[1]]
 
-      if @cursor_pos.length < 2
-        @cursor_pos << new_pos
-      else
-        @cursor_pos = [];
-        @cursor_pos << new_pos;
-      end
+      # if @cursor_pos.length < 2
+      #   @cursor_pos << new_pos
+      # else
+      #   @cursor_pos = [];
+      #   @cursor_pos << new_pos;
+      # end
       new_pos
     elsif [:left, :right, :up, :down].include?(key) 
       update_pos(MOVES[key])  
@@ -102,19 +103,20 @@ class Cursor
   end
 
   def valid_pos?(pos) 
-    row, col = pos 
-    debugger
-    cur_cursor_pos = cursor_pos[-1]
-    cur_cursor_pos[0] += row 
-    cur_cursor_pos[1] += col
+    new_row, new_col = pos 
+    cur_cursor_pos = [cursor_pos[0], cursor_pos[1]]
+    cur_cursor_pos[0] += new_row 
+    cur_cursor_pos[1] += new_col
     cur_cursor_pos.all?{ |el| el.between?(0,7)}    
   end 
 
   def update_pos(diff)
     row, col = diff
     if valid_pos?(diff)
-      @row += row
-      @col += col
+      # @row += row
+      # @col += col
+      @cursor_pos[0] += row
+      @cursor_pos[1] += col
     end
   end
 

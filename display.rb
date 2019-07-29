@@ -33,7 +33,8 @@ class Display
             str << "#{piece.symbol} ".colorize(:color => piece.color, :background => :white)
           end 
         end 
-        str[col+1] = "#{piece.symbol} ".colorize(:background => :light_yellow) if @cursor.cursor_pos.include?([row, col])
+        # debugger
+        str[col+1] = "#{piece.symbol} ".colorize(:background => :light_yellow) if @cursor.cursor_pos == [row, col]
     end
     full_board += str.join + "\n"
     end
