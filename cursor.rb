@@ -36,8 +36,8 @@ class Cursor
 
   attr_reader :cursor_pos, :board
 
-  def initialize(cursor_pos, board)
-    @cursor_pos = cursor_pos
+  def initialize(board)
+    @cursor_pos = []
     @board = board
 
     @row = cursor_pos[0]
@@ -84,8 +84,16 @@ class Cursor
     if key == :ctrl_c 
       Process.exit(0)
       nil
-    elsif[:return, :space].include?(key) 
-      [@row, @col]
+    elsif[:return, :space].include?(key)
+      new_pos = [@row, @col]
+
+      if @cursor_pos.length < 2
+        @cursor_pos << new_pos
+      else
+        @cursor_pos = [];
+        @cursor_pos << new_pos;
+      end
+      new_pos
     elsif [:left, :right, :up, :down].include?(key) 
       update_pos(MOVES[key])  
       nil
@@ -95,7 +103,8 @@ class Cursor
 
   def valid_pos?(pos) 
     row, col = pos 
-    cur_cursor_pos = cursor_pos
+    debugger
+    cur_cursor_pos = cursor_pos[-1]
     cur_cursor_pos[0] += row 
     cur_cursor_pos[1] += col
     cur_cursor_pos.all?{ |el| el.between?(0,7)}    

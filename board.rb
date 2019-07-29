@@ -6,7 +6,6 @@ require_relative "knight"
 require_relative "king"
 require_relative "null_piece"
 
-
 require "byebug"
 
 class Board 
@@ -19,8 +18,7 @@ class Board
   end 
 
   def move_piece(start_pos, end_pos)
-    debugger
-    if self[start_pos] && self[end_pos].is_a?(NullPiece)
+    if self[start_pos] && self[end_pos].is_a?(NullPiece) 
       start_pos_piece = self[start_pos]
       self[end_pos] = start_pos_piece
       self[start_pos] = sentinel

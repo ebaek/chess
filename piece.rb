@@ -1,7 +1,7 @@
 require_relative "board"
 class Piece 
 
-  attr_reader :color, :board 
+  attr_reader :color, :board, :pos
 
   def initialize(color, board, pos)
     @color = color
@@ -21,7 +21,7 @@ class Piece
   end
 
   def update_pos(new_pos)
-    self.pos = new_pos
+    @pos = new_pos
   end
 
   def make_dirs 

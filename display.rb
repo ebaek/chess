@@ -8,7 +8,7 @@ class Display
 
   def initialize(board)
     @board = board
-    @cursor = Cursor.new([0,0], board)
+    @cursor = Cursor.new(board)
   end
 
   def render
@@ -33,7 +33,7 @@ class Display
             str << "#{piece.symbol} ".colorize(:color => piece.color, :background => :white)
           end 
         end 
-        str[col+1] = "#{piece.symbol} ".colorize(:background => :light_yellow) if [row, col] == @cursor.cursor_pos 
+        str[col+1] = "#{piece.symbol} ".colorize(:background => :light_yellow) if @cursor.cursor_pos.include?([row, col])
     end
     full_board += str.join + "\n"
     end

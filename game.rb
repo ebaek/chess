@@ -9,7 +9,7 @@ require "byebug"
 
 class Game 
 
-  attr_reader :board, :display, :player1, :player2, :cursor
+  attr_reader :board, :display, :player1, :player2, :cursor, :current_player
 
   def initialize
     @board = Board.new 
@@ -21,30 +21,9 @@ class Game
   end
   
   def play  
-    display.render
     until board.check_mate?(player1.color) || board.check_mate?(player2.color)
-        start_pos = nil
-        display.render
-        
-        until start_pos
-          start_pos = display.cursor.get_input
-          display.render
-        end
-
-        end_pos = nil
-
-        until end_pos && start_pos != end_pos
-          end_pos = display.cursor.get_input
-          display.render
-        end
-        
-        if board[start_pos].move_dirs.include?(end_pos)
-          board.move_piece(start_pos, end_pos)
-          display.render
-        end
-        
-      end
-     
+      move 
+    end 
   
 
       #   else
@@ -54,12 +33,35 @@ class Game
       #   puts e.message
       #   retry
       # end
-      # self.swap_turn!
-  end 
+      
+  end
   
+  def move
+    start_pos = nil
+    display.render
+    
+    until start_pos && board[start_pos].color == current_player.color
+      start_pos = display.cursor.get_input
+      display.render
+    end
+
+    end_pos = nil
+
+    until end_pos && start_pos != end_pos
+      end_pos = display.cursor.get_input
+      display.render
+    end
+    
+    if board[start_pos].move_dirs.include?(end_pos)
+      board[start_pos].update_pos(end_pos)
+      board.move_piece(start_pos, end_pos)
+      display.render
+      self.swap_turn!
+    end 
+  end
   
   def swap_turn!
-    current_player = current_player == player1 ? player2 : player1 
+    @current_player = current_player == player1 ? player2 : player1 
   end 
 
 end 
